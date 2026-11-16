@@ -197,6 +197,13 @@ module assembly_metal() {
   socket_placed() translate([0,0,socket_h()+0.4]) socket_cap();
   // Metal stock is intentionally EXCLUDED (not an STL printable component).
 }
+// VISUALIZATION ONLY. Approximate external metal shaft is not a printable component.
+// 1 mm gap at socket mouth prevents mesh overlap / coplanar faces.
+module assembly_metal_visual() {
+  assembly_metal();
+  socket_placed() cubexy(socket_len+1,neck_len+head_len,
+    -metal_bar_w/2,metal_bar_w/2,metal_bar_t,socket_floor);
+}
 module preview_case() { color([0.8,0.8,0.8,0.28]) cubexy(0,keyboard_x,0,keyboard_y,keyboard_z,-keyboard_z); }
 module preview_screws() {
   color([0.12,0.35,0.85]) for(p=concat(mount_top,mount_bottom))
@@ -234,6 +241,7 @@ else if(mode=="join_clip") join_clip();
 else if(mode=="fit_coupon") fit_coupon();
 else if(mode=="assembly_integrated") assembly_integrated();
 else if(mode=="assembly_metal") assembly_metal();
+else if(mode=="assembly_metal_visual") assembly_metal_visual();
 else if(mode=="preview_integrated") preview_integrated();
 else if(mode=="preview_metal") preview_metal();
 else echo("Unknown mode",mode);
