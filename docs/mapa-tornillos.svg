@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1250" height="790" viewBox="-48 -35 449 292">
+<rect x="-48" y="-35" width="449" height="292" fill="#fffefb"/>
+<rect x="0" y="0" width="355" height="221" fill="#f5f7fb" stroke="#475569" stroke-width="2"/>
+<text x="5" y="-14" font-family="sans-serif" font-size="10" font-weight="bold">MiniLab MkII — Mapa de tornillos preliminar</text>
+<text x="5" y="-5" font-family="sans-serif" font-size="5" fill="#b91c1c">Estimaciones NO verificadas. No imprimir como plantilla de corte.</text>
+<circle cx="23" cy="117" r="3.5" fill="#2563eb" stroke="white" stroke-width="1"/><text x="28" y="119" font-family="sans-serif" font-size="5" fill="#1e40af">P1</text>
+<circle cx="125" cy="117" r="3.5" fill="#2563eb" stroke="white" stroke-width="1"/><text x="130" y="119" font-family="sans-serif" font-size="5" fill="#1e40af">P2</text>
+<circle cx="225" cy="117" r="3.5" fill="#2563eb" stroke="white" stroke-width="1"/><text x="230" y="119" font-family="sans-serif" font-size="5" fill="#1e40af">P3</text>
+<circle cx="310" cy="117" r="3.5" fill="#2563eb" stroke="white" stroke-width="1"/><text x="315" y="119" font-family="sans-serif" font-size="5" fill="#1e40af">P4</text>
+<circle cx="25" cy="162" r="3.5" fill="#2563eb" stroke="white" stroke-width="1"/><text x="30" y="164" font-family="sans-serif" font-size="5" fill="#1e40af">P5</text>
+<circle cx="126" cy="162" r="3.5" fill="#2563eb" stroke="white" stroke-width="1"/><text x="131" y="164" font-family="sans-serif" font-size="5" fill="#1e40af">P6</text>
+<circle cx="225" cy="162" r="3.5" fill="#2563eb" stroke="white" stroke-width="1"/><text x="230" y="164" font-family="sans-serif" font-size="5" fill="#1e40af">P7</text>
+<circle cx="311" cy="162" r="3.5" fill="#2563eb" stroke="white" stroke-width="1"/><text x="316" y="164" font-family="sans-serif" font-size="5" fill="#1e40af">P8</text>
+<circle cx="11" cy="8" r="4" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2 1"/><text x="16" y="10" font-family="sans-serif" font-size="5" fill="#92400e">E1</text>
+<circle cx="125" cy="10" r="4" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2 1"/><text x="130" y="12" font-family="sans-serif" font-size="5" fill="#92400e">E2</text>
+<circle cx="238" cy="12" r="4" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2 1"/><text x="243" y="14" font-family="sans-serif" font-size="5" fill="#92400e">E3</text>
+<circle cx="345" cy="9" r="4" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2 1"/><text x="350" y="11" font-family="sans-serif" font-size="5" fill="#92400e">E4</text>
+<circle cx="12" cy="110" r="4" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2 1"/><text x="17" y="112" font-family="sans-serif" font-size="5" fill="#92400e">E5</text>
+<circle cx="238" cy="109" r="4" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2 1"/><text x="243" y="111" font-family="sans-serif" font-size="5" fill="#92400e">E6</text>
+<circle cx="346" cy="112" r="4" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2 1"/><text x="351" y="114" font-family="sans-serif" font-size="5" fill="#92400e">E7</text>
+<circle cx="10" cy="213" r="4" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2 1"/><text x="15" y="215" font-family="sans-serif" font-size="5" fill="#92400e">E8</text>
+<circle cx="124" cy="216" r="4" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2 1"/><text x="129" y="218" font-family="sans-serif" font-size="5" fill="#92400e">E9</text>
+<circle cx="237" cy="215" r="4" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2 1"/><text x="242" y="217" font-family="sans-serif" font-size="5" fill="#92400e">E10</text>
+<circle cx="348" cy="212" r="4" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2 1"/><text x="353" y="214" font-family="sans-serif" font-size="5" fill="#92400e">E11</text>
+<text x="3" y="236" font-family="sans-serif" font-size="7" fill="#1d4ed8">AZUL: 8 coordenadas facilitadas</text>
+<text x="180" y="236" font-family="sans-serif" font-size="7" fill="#b45309">DORADO: 11 candidatos visuales</text>
+<text x="3" y="252" font-family="sans-serif" font-size="7" fill="#991b1b">NO están medidos los tornillos grandes ni su rosca.</text>
+</svg>
