@@ -8,7 +8,7 @@ BOUNDS={"mount_left":(220,160),"join_clip":(60,40),
 "integrated_root":(220,160),"integrated_mid":(220,80),
 "integrated_tip":(220,80),"metal_base_right":(220,160),
 "metal_socket_cap":(110,80),"fit_coupon":(110,40)}
-ASSEMBLIES=("assembly_integrated","assembly_metal")
+ASSEMBLIES=("assembly_integrated","assembly_metal","assembly_metal_visual")
 def validate():
     issues=[]
     for name in (*BOUNDS,*ASSEMBLIES):
