@@ -17,7 +17,7 @@ small_hole_d=5.5; // PROVISIONAL passage diameter: NOT thread/head measurement
 large_hole_d=6.5; // PROVISIONAL; currently not used for cutting
 mount_hole_d=small_hole_d;
 join_hole_d=3.5; lap_hole_d=4.5;
-plate_t=4.5; rail_w=18; brace_w=16; left_x0=14; seam_x=170; right_x1=335;
+plate_t=4.5; rail_w=18; brace_w=16; left_x0=14; seam_x=170; right_x1=354;
 // Strap anchors: not approved for load bearing until physical testing.
 strap_slot_w=7; strap_slot_length=24; strap_rear_x=-25; strap_rear_y=145;
 strap_front_x=359; strap_front_y=139; strap_extra_t=3;
