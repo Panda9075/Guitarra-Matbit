@@ -6,7 +6,16 @@ mode="preview_metal"; $fn=32;
 keyboard_x=355; keyboard_y=221; keyboard_z=50;
 mount_top=[[23,117],[125,117],[225,117],[310,117]];
 mount_bottom=[[25,162],[126,162],[225,162],[311,162]];
-mount_hole_d=5.5; // UNCONFIRMED: nominal clearance, verify with fit coupon.
+// EIGHT owner-measured interior positions above are preserved EXACTLY.
+ // Additional perimeter/interior candidates traced from photos are ESTIMATES ONLY.
+ // Some screw heads are hidden by markings; candidates are NOT drilling coordinates.
+large_top=[[11,8],[125,10],[238,12],[345,9]];
+large_middle=[[12,110],[238,109],[346,112]];
+large_bottom=[[10,213],[124,216],[237,215],[348,212]];
+use_unverified_large_holes=false; // MUST remain false until measured on actual keyboard
+small_hole_d=5.5; // PROVISIONAL passage diameter: NOT thread/head measurement
+large_hole_d=6.5; // PROVISIONAL; currently not used for cutting
+mount_hole_d=small_hole_d;
 join_hole_d=3.5; lap_hole_d=4.5;
 plate_t=4.5; rail_w=18; brace_w=16; left_x0=14; seam_x=170; right_x1=335;
 // Strap anchors: not approved for load bearing until physical testing.
@@ -24,17 +33,26 @@ module cubexy(x0,x1,y0,y1,h,z=0) {
   translate([x0,y0,z]) cube([x1-x0,y1-y0,h]);
 }
 module vertical_brace(cx) {
-  cubexy(cx-brace_w/2,cx+brace_w/2,117-rail_w/2,162+rail_w/2,plate_t);
+  // A provisional frame across the 4 y rows. Check interference with rubber feet.
+  cubexy(cx-brace_w/2,cx+brace_w/2,3,219,plate_t);
 }
 module mount_rails(x0,x1) {
-  cubexy(x0,x1,117-rail_w/2,117+rail_w/2,plate_t);
-  cubexy(x0,x1,162-rail_w/2,162+rail_w/2,plate_t);
+  for(y=[117,162]) cubexy(x0,x1,y-rail_w/2,y+rail_w/2,plate_t);
+  for(y=[10,212]) cubexy(x0,x1,y-7,y+7,plate_t);
+}
+function all_large()=concat(large_top,large_middle,large_bottom);
+function left_large()=[for(p=all_large()) if(p[0]<seam_x) p];
+function right_large()=[for(p=all_large()) if(p[0]>=seam_x) p];
+module large_mount_candidate_holes(pts) {
+  // Disabled by default: photo-only locations MUST be measured before activation.
+  if(use_unverified_large_holes)
+    for(p=pts) translate([p[0],p[1],-1]) cylinder(d=large_hole_d,h=plate_t+25);
 }
 module keyboard_screw_holes(points) {
   for(p=points) translate([p[0],p[1],-1]) cylinder(d=mount_hole_d,h=plate_t+23);
 }
 module join_screw_holes(x) {
-  for(y=[117,162]) translate([x,y,-1]) cylinder(d=join_hole_d,h=plate_t+23);
+  for(y=[10,117,162,212]) translate([x,y,-1]) cylinder(d=join_hole_d,h=plate_t+23);
 }
 // Closed textile loop slots, both OUTSIDE the original instrument footprint.
 module strap_slot(cx,cy) {
@@ -64,8 +82,9 @@ module front_horn() {
 }
 module mount_left() {
   difference() {
-    union() { mount_rails(left_x0,seam_x); vertical_brace(23); vertical_brace(125); rear_horn(); }
+    union() { mount_rails(left_x0,seam_x); vertical_brace(12); vertical_brace(125); rear_horn(); }
     keyboard_screw_holes([mount_top[0],mount_top[1],mount_bottom[0],mount_bottom[1]]);
+    large_mount_candidate_holes(left_large());
     join_screw_holes(161);
     strap_slot(strap_rear_x,strap_rear_y);
   }
@@ -76,12 +95,13 @@ module root_gusset() {
                     [327,151],[306,170],[285,170],[296,139]]);
 }
 module mount_right_blank() {
-  union() { mount_rails(seam_x,right_x1); vertical_brace(225); vertical_brace(310); root_gusset(); front_horn(); }
+  union() { mount_rails(seam_x,right_x1); vertical_brace(238); vertical_brace(346); root_gusset(); front_horn(); }
 }
 module mount_right() {
   difference() {
     mount_right_blank();
     keyboard_screw_holes([mount_top[2],mount_top[3],mount_bottom[2],mount_bottom[3]]);
+    large_mount_candidate_holes(right_large());
     join_screw_holes(179);
     strap_slot(strap_front_x,strap_front_y);
   }
@@ -136,6 +156,7 @@ module integrated_root() {
   difference() {
     union() { mount_right_blank(); neck_placed() neck_piece(0); }
     keyboard_screw_holes([mount_top[2],mount_top[3],mount_bottom[2],mount_bottom[3]]);
+    large_mount_candidate_holes(right_large());
     join_screw_holes(179);
     strap_slot(strap_front_x,strap_front_y);
   }
@@ -144,6 +165,7 @@ module integrated_full_right() {
   difference() {
     union() { mount_right_blank(); neck_placed() neck_prism(); }
     keyboard_screw_holes([mount_top[2],mount_top[3],mount_bottom[2],mount_bottom[3]]);
+    large_mount_candidate_holes(right_large());
     join_screw_holes(179);
     strap_slot(strap_front_x,strap_front_y);
   }
@@ -174,6 +196,7 @@ module metal_base_right() {
   difference() {
     union() { mount_right_blank(); socket_placed() socket_cradle(); }
     keyboard_screw_holes([mount_top[2],mount_top[3],mount_bottom[2],mount_bottom[3]]);
+    large_mount_candidate_holes(right_large());
     join_screw_holes(179);
     strap_slot(strap_front_x,strap_front_y);
   }
@@ -206,10 +229,13 @@ module assembly_metal_visual() {
 }
 module preview_case() { color([0.8,0.8,0.8,0.28]) cubexy(0,keyboard_x,0,keyboard_y,keyboard_z,-keyboard_z); }
 module preview_screws() {
+  // Amber heads are photographic estimates for auditing, not machined holes.
+  color([0.86,0.60,0.13]) for(p=all_large())
+    translate([p[0],p[1],plate_t+0.8]) cylinder(d=large_hole_d,h=0.9);
   color([0.12,0.35,0.85]) for(p=concat(mount_top,mount_bottom))
     translate([p[0],p[1],-0.4]) cylinder(d=mount_hole_d-0.5,h=0.4);
 }
-module bridges_placed() { for(y=[117,162]) translate([0,y,plate_t]) join_clip(); }
+module bridges_placed() { for(y=[10,117,162,212]) translate([0,y,plate_t]) join_clip(); }
 module preview_integrated() {
   preview_case();
   color([0.85,0.25,0.2]) {
