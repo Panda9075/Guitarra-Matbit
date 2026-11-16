@@ -1,3 +1,0 @@
-pytest>=8.0,<10
-trimesh>=4.0,<5
-numpy>=1.26

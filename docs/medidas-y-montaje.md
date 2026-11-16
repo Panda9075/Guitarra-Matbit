@@ -1,38 +1,35 @@
-# Medidas y montaje — prototipo V0
+# Medidas y montaje V1 — prototipo no aprobado para sostenerse con correa
 
-## Referencia geométrica
+## Sistema de coordenadas
 
-Mirando la **tapa inferior** como en la foto del propietario: X de izquierda a derecha, Y de arriba hacia abajo, origen en la esquina superior izquierda. Todas las unidades en mm.
+En la **tapa inferior** del teclado, X izquierda→derecha, Y arriba→abajo. Origen en esquina superior izquierda de la vista inferior, pendiente de confirmar en el objeto real. Todas las unidades son milímetros.
 
-- Carcasa: **355 mm de largo**, **221 mm de ancho medido** (ficha comercial ~220 mm); altura nominal ~50 mm.
-- Tornillos pequeños, fila superior Y=117: **(23,117), (125,117), (225,117), (310,117)**.
-- Fila inferior Y=162: **(25,162), (126,162), (225,162), (311,162)**.
-- Los puntos **no están verificados con calibre**. Verificar cuál es la esquina origen y qué agujero corresponde en la tapa real. Los apoyos grandes de goma NO son puntos de montaje.
-- La foto marcada `0.5 cm` es insuficiente para saber diámetro de rosca, tornillo, cabeza o agujero. `mount_hole_d=5.5` es **valor inicial a calibrar, no dato confirmado**.
+- Instrumento Arturia MiniLab MkII: 355×221 mm en planta según foto/medición; altura de referencia 50 mm.
+- Tornillos fila alta Y=117: (23,117), (125,117), (225,117), (310,117).
+- Tornillos fila baja Y=162: (25,162), (126,162), (225,162), (311,162).
+- Diámetro de paso programado `mount_hole_d=5.5` mm: **sin validar**. La anotación fotográfica «0.5 cm» NO identifica tipo de tornillo ni rosca.
+- Perfil metálico ejemplificativo rectangular **25×3 mm**; debe medirse. Un perfil redondo exigiría cambiar el diseño.
 
-## Lista de piezas
+## Correa: dos ojos impresos fuera del teclado
 
-| Ambos diseños | Mástil 3D integrado | Mástil de metal |
-|---|---|---|
-| `mount_left` ×1 | `integrated_root` ×1 | `metal_base_right` ×1 |
-| `join_clip` ×2 | `integrated_mid` ×1 | `metal_socket_cap` ×1 |
-| `fit_coupon` ×1 (ensayo) | `integrated_tip` ×1 | Perfil metálico real (no incluido) |
-
-Adicionales **solo externos**: 4 tornillos + tuercas M3 para clips; 4 tornillos + tuercas M4 para empalmes del mástil integrado o para abrazadera metálica; arandelas. Ajustar longitudes al material final.
-
-El `integrated_full_right` representa la versión monolítica conceptual de base + mástil; el diseño dividido es para facilitar la impresión y **sus uniones son puntos críticos de resistencia**.
+- **Culata trasera:** pieza única con `mount_left`, se prolonga ~41 mm a la izquierda. Centro de ojo (-25,145).
+- **Oreja frontal:** integrada en ambas bases derechas junto al origen del mástil. Centro de ojo (359,139).
+- Ojos de 24×7 mm para una cinta de aproximadamente 20 mm, no para strap-buttons convencionales.
+- Se transfieren esfuerzos a los cuatro tornillos de cada sector de la tapa. **No se ha probado si la tapa, el plástico, los tornillos y la correa pueden soportar la carga del teclado y la palanca del mástil. NO colgar el instrumento** hasta prueba específica; probablemente convenga una fijación portante envolvente independiente.
 
 ## Antes de imprimir o montar
 
-1. Imprimir `fit_coupon.stl` para comparar agujeros nominales de 3, 3.5, 4, 4.5, 5 y 5.5 mm.
-2. Con calibre, medir **cada tornillo original**: diámetro del vástago, diámetro de cabeza, paso de rosca, longitud y profundidad segura. Si se intercambia por otro más largo, validar que no pueda tocar electrónica, membranas o teclas. La placa roba ~4.5 mm de longitud de acople.
-3. Hacer una plantilla a escala real y comprobar las **8 posiciones**; la perspectiva de las fotos puede distorsionar centros.
-4. Revisar que los raíles en Y=117 y Y=162 mm no coincidan con patas, nervaduras, etiqueta, salientes ni puertos. No bloquear USB, pedal o respiración.
-5. Medir ancho y espesor reales del **perfil metálico**, su forma (rectangular o redonda) y el largo útil. El alojamiento actual acepta una sección rectangular de ejemplo de 25 × 3 mm; **si es cilíndrica requiere rediseño**.
-6. Ensayar la combinación metal-plástico y la distribución de esfuerzos. El montaje atornillado a la tapa electrónica no está evaluado para cargas laterales ni esfuerzos por palanca.
+1. Hacer plantilla a escala real de los 8 centros y verificar orientación X/Y con calibre.
+2. Imprimir primero `fit_coupon.stl`, comprobar diámetro de agujeros y encaje; identificar **cada** tornillo original (cabeza, rosca, diámetro, profundidad y longitud de enganche).
+3. La base añade 4.5 mm bajo la carcasa: los tornillos originales podrían quedar cortos; nunca poner otros más largos sin conocer profundidad del alojamiento y evitar daño a electrónica/teclas.
+4. Comprobar patas de goma, nervaduras, puertos, USB, etiquetas y cables para descartar interferencias.
+5. Unir las dos bases en X=170 mediante dos `join_clip` con 4 fijaciones M3 externas y tuercas; no confundirlas con tornillos del teclado.
+6. Para mástil 3D, usar dos empalmes solapados con un total de cuatro tornillos M4 externos; comprobar flexión y grietas.
+7. Para perfil metálico, el alojamiento usa pared de 9 mm y tope interior de 7 mm, con tapa de 4 tornillos M4. **Sigue faltando retención positiva contra deslizamiento hacia afuera**; no confiar la carga a la fricción del apriete.
+8. Probar en mesa acolchada, desconectado, sin levantarlo por mástil o correa. Revisar fisuras/holgura tras ensayos.
 
-## Impresión y seguridad
+## Impresión / límites
 
-PETG recomendado **solo para pruebas iniciales**, 4–6 perímetros y 30–40 % relleno como punto de partida, sujeto a ensayos. Las bases y tramos se imprimen planos. Por costo, el diseño metálico usa menos plástico. Los STL son geometrías CAD; **no son una certificación de resistencia**.
+Para primeras pruebas: PETG 4–6 perímetros, relleno 30–40% orientativo, condicionado a ensayos. Todas las **piezas separadas** caben teóricamente en cama 220×220 mm (sin margen para brim); el mástil monolítico conceptual no cabe. La versión de mástil metálico utiliza menos polímero.
 
-Probar en mesa acolchada y sin alimentación USB. No colgar de correa, no cargar el peso del teclado del mástil ni tocar de pie hasta probar una fijación portante independiente y comprobar cargas. La representación conceptual de guitarra no implica que la correa del dibujo sea segura.
+El éxito de GitHub Actions garantiza **solamente** que el CAD genera mallas cerradas con medidas dentro del límite, NO validación de fabricación, encaje, ergonomía ni resistencia estructural.

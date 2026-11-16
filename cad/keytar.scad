@@ -2,17 +2,20 @@
 // PROTOTYPE ONLY. Dimensions of mounting screws and metal bar are NOT validated.
 // Coordinate frame: underside view, X left->right, Y top->bottom, Z away from keyboard.
 // Export: openscad -o part.stl -D 'mode="metal_base_right"' cad/keytar.scad
-mode="preview_metal"; $fn=48;
+mode="preview_metal"; $fn=32;
 keyboard_x=355; keyboard_y=221; keyboard_z=50;
 mount_top=[[23,117],[125,117],[225,117],[310,117]];
 mount_bottom=[[25,162],[126,162],[225,162],[311,162]];
 mount_hole_d=5.5; // UNCONFIRMED: nominal clearance, verify with fit coupon.
 join_hole_d=3.5; lap_hole_d=4.5;
 plate_t=4.5; rail_w=18; brace_w=16; left_x0=14; seam_x=170; right_x1=335;
+// Strap anchors: not approved for load bearing until physical testing.
+strap_slot_w=7; strap_slot_length=24; strap_rear_x=-25; strap_rear_y=145;
+strap_front_x=359; strap_front_y=139; strap_extra_t=3;
 metal_bar_w=25; // PLACEHOLDER rectangular metal profile
 metal_bar_t=3;  // PLACEHOLDER rectangular metal profile
 metal_clearance=0.6;
-socket_len=72; socket_wall=5; socket_floor=5; cap_t=5;
+socket_len=72; socket_wall=9; socket_floor=5; cap_t=5; socket_stop_t=7;
 neck_x=308; neck_y=87; neck_angle=-18; neck_t=12;
 neck_len=375; head_len=35; neck_start_w=48; neck_end_w=31;
 first_joint=50; second_joint=220; joint_lap=20; neck_bolt_offset=11;
@@ -33,11 +36,38 @@ module keyboard_screw_holes(points) {
 module join_screw_holes(x) {
   for(y=[117,162]) translate([x,y,-1]) cylinder(d=join_hole_d,h=plate_t+23);
 }
+// Closed textile loop slots, both OUTSIDE the original instrument footprint.
+module strap_slot(cx,cy) {
+  translate([0,0,-1]) linear_extrude(height=plate_t+strap_extra_t+2)
+  hull() {
+    translate([cx,cy-(strap_slot_length-strap_slot_w)/2]) circle(d=strap_slot_w);
+    translate([cx,cy+(strap_slot_length-strap_slot_w)/2]) circle(d=strap_slot_w);
+  }
+}
+module rear_horn() {
+  linear_extrude(height=plate_t+strap_extra_t)
+  hull() {
+    translate([-29,134]) circle(r=12);
+    translate([-29,157]) circle(r=12);
+    translate([23,117]) circle(r=15);
+    translate([25,162]) circle(r=15);
+  }
+}
+module front_horn() {
+  linear_extrude(height=plate_t+strap_extra_t)
+  hull() {
+    translate([327,117]) circle(r=13);
+    translate([360,129]) circle(r=15);
+    translate([359,151]) circle(r=15);
+    translate([312,162]) circle(r=12);
+  }
+}
 module mount_left() {
   difference() {
-    union() { mount_rails(left_x0,seam_x); vertical_brace(23); vertical_brace(125); }
+    union() { mount_rails(left_x0,seam_x); vertical_brace(23); vertical_brace(125); rear_horn(); }
     keyboard_screw_holes([mount_top[0],mount_top[1],mount_bottom[0],mount_bottom[1]]);
     join_screw_holes(161);
+    strap_slot(strap_rear_x,strap_rear_y);
   }
 }
 module root_gusset() {
@@ -46,13 +76,14 @@ module root_gusset() {
                     [327,151],[306,170],[285,170],[296,139]]);
 }
 module mount_right_blank() {
-  union() { mount_rails(seam_x,right_x1); vertical_brace(225); vertical_brace(310); root_gusset(); }
+  union() { mount_rails(seam_x,right_x1); vertical_brace(225); vertical_brace(310); root_gusset(); front_horn(); }
 }
 module mount_right() {
   difference() {
     mount_right_blank();
     keyboard_screw_holes([mount_top[2],mount_top[3],mount_bottom[2],mount_bottom[3]]);
     join_screw_holes(179);
+    strap_slot(strap_front_x,strap_front_y);
   }
 }
 module join_clip() {
@@ -106,6 +137,7 @@ module integrated_root() {
     union() { mount_right_blank(); neck_placed() neck_piece(0); }
     keyboard_screw_holes([mount_top[2],mount_top[3],mount_bottom[2],mount_bottom[3]]);
     join_screw_holes(179);
+    strap_slot(strap_front_x,strap_front_y);
   }
 }
 module integrated_full_right() {
@@ -113,6 +145,7 @@ module integrated_full_right() {
     union() { mount_right_blank(); neck_placed() neck_prism(); }
     keyboard_screw_holes([mount_top[2],mount_top[3],mount_bottom[2],mount_bottom[3]]);
     join_screw_holes(179);
+    strap_slot(strap_front_x,strap_front_y);
   }
 }
 function channel_w()=metal_bar_w+2*metal_clearance;
@@ -121,7 +154,8 @@ function socket_h()=socket_floor+metal_bar_t-0.2;
 module socket_cradle() {
   difference() {
     cubexy(0,socket_len,-socket_w()/2,socket_w()/2,socket_h());
-    cubexy(-1,socket_len+1,-channel_w()/2,channel_w()/2,socket_h()+1,socket_floor);
+    // Fixed 7mm inner end stop: metal slides in from the outer end.
+    cubexy(socket_stop_t,socket_len+1,-channel_w()/2,channel_w()/2,socket_h()+1,socket_floor);
     for(x=[19,53],y=[-socket_w()/2+socket_wall/2,socket_w()/2-socket_wall/2])
       translate([x,y,-1]) cylinder(d=lap_hole_d,h=socket_h()+4);
   }
@@ -141,6 +175,7 @@ module metal_base_right() {
     union() { mount_right_blank(); socket_placed() socket_cradle(); }
     keyboard_screw_holes([mount_top[2],mount_top[3],mount_bottom[2],mount_bottom[3]]);
     join_screw_holes(179);
+    strap_slot(strap_front_x,strap_front_y);
   }
 }
 module fit_coupon() {
@@ -149,6 +184,18 @@ module fit_coupon() {
     for(i=[0:5]) translate([11+i*16,10,-1])
       cylinder(d=3+i*0.5,h=plate_t+2);
   }
+}
+module join_clips_placed() { for(y=[117,162]) translate([0,y,plate_t]) join_clip(); }
+module assembly_integrated() {
+  mount_left(); integrated_root();
+  neck_placed() neck_piece(1); neck_placed() neck_piece(2);
+  join_clips_placed();
+}
+module assembly_metal() {
+  mount_left(); metal_base_right(); join_clips_placed();
+  // Deliberate 0.4mm exploded viewing gap avoids overlapping/coplanar STL surfaces.
+  socket_placed() translate([0,0,socket_h()+0.4]) socket_cap();
+  // Metal stock is intentionally EXCLUDED (not an STL printable component).
 }
 module preview_case() { color([0.8,0.8,0.8,0.28]) cubexy(0,keyboard_x,0,keyboard_y,keyboard_z,-keyboard_z); }
 module preview_screws() {
@@ -185,6 +232,8 @@ else if(mode=="metal_base_right") metal_base_right();
 else if(mode=="metal_socket_cap") socket_cap();
 else if(mode=="join_clip") join_clip();
 else if(mode=="fit_coupon") fit_coupon();
+else if(mode=="assembly_integrated") assembly_integrated();
+else if(mode=="assembly_metal") assembly_metal();
 else if(mode=="preview_integrated") preview_integrated();
 else if(mode=="preview_metal") preview_metal();
 else echo("Unknown mode",mode);
