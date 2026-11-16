@@ -3,7 +3,7 @@ import re
 from pathlib import Path
 SCAD=(Path(__file__).resolve().parents[1]/"cad"/"keytar.scad").read_text()
 def val(key):
-    m=re.search(r"(?:^|;)\\s*"+re.escape(key)+r"\\s*=\\s*([^;]+);",SCAD,re.M)
+    m=re.search(r"(?:^|;)\s*"+re.escape(key)+r"\s*=\s*([^;]+);",SCAD,re.M)
     assert m, "Missing "+key
     return m.group(1).strip()
 def test_owner_coordinates():
