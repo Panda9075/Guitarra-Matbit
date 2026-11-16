@@ -7,11 +7,11 @@ Modelo CAD paramétrico **V1, prototipo**. Usa los 8 tornillos originales de la 
 GitHub tiene un visor 3D nativo para los ficheros STL. Entra en uno de estos archivos (con sesión iniciada, este repo es privado):
 
 - **[Mástil 3D integrado — montaje](models/stl/assembly_integrated.stl)**
-- **[Mástil metálico — soporte y montaje impreso](models/stl/assembly_metal.stl)**
+- **[Mástil metálico — montaje COMPLETO con perfil ilustrativo](models/stl/assembly_metal_visual.stl)**
 - **[Culata trasera / anclaje de correa](models/stl/mount_left.stl)**
 - **[Soporte para mástil metálico](models/stl/metal_base_right.stl)**
 
-**Arrastra para girar, rueda para zoom y clic derecho+arrastrar para mover.** Los STL se publican automáticamente al terminar **Actions → Generar STL y revisar CAD**. Si aún no aparecen los enlaces, descarga el Artifact `STL-y-vistas-Matbit` de esa ejecución. Los montajes muestran las piezas impresas; el metal real no va en el STL.
+**Arrastra para girar, rueda para zoom y clic derecho+arrastrar para mover.** Los STL se publican automáticamente al terminar **Actions → Generar STL y revisar CAD**. Si aún no aparecen los enlaces, descarga el Artifact `STL-y-vistas-Matbit` de esa ejecución. El mástil metálico de la vista completa es ilustrativo y no debe imprimirse; la versión de piezas impresas sin metal se encuentra en [assembly_metal.stl](models/stl/assembly_metal.stl).
 
 ## Dos diseños
 
