@@ -1,6 +1,12 @@
 # Guitarra-Matbit — Arturia MiniLab MkII → keytar
 
-Modelo CAD paramétrico **V1, prototipo**. Usa los 8 tornillos originales de la tapa inferior (sin agujeros nuevos en el teclado). Incluye **culata trasera y dos anclajes de correa textil**, con dos opciones de mástil.
+Modelo CAD paramétrico **V2 EN REVISIÓN**, para Arturia MiniLab MkII. Incluye los 8 tornillos interiores entregados por el propietario y **11 ubicaciones adicionales estimadas visualmente**; las estimaciones NO se taladran en el prototipo. Incluye **culata trasera y dos anclajes de correa textil**, con dos opciones de mástil.
+
+## Revisión de tornillos pequeños y grandes
+Las 8 medidas iniciales no se han cambiado. Las nuevas cabezas de tornillos observadas en la periferia se marcaron como **candidatos** en amarillo, pero no se perforan hasta confirmarlas con calibre o regla (`use_unverified_large_holes=false`). Los diámetros de ambos tipos también son provisionales.
+
+- [Mapa preliminar de tornillos](docs/mapa-tornillos.svg) — azul: originales; dorado: aproximaciones.
+- [Lista de medidas pendientes](docs/revision-tornillos.md) — no usar de plantilla de taladrado.
 
 ## Ver online y girar el 3D sin instalar programas
 
