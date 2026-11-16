@@ -26,3 +26,17 @@ def test_modes():
     for option in ("mount_left","integrated_root","integrated_mid","integrated_tip",
                    "metal_base_right","metal_socket_cap","assembly_integrated","assembly_metal"):
         assert 'mode=="'+option+'"' in SCAD
+
+def test_other_screw_groups_are_audited_not_drilled():
+    assert val("use_unverified_large_holes")=="false"
+    assert val("large_top")=="[[11,8],[125,10],[238,12],[345,9]]"
+    assert val("large_middle")=="[[12,110],[238,109],[346,112]]"
+    assert val("large_bottom")=="[[10,213],[124,216],[237,215],[348,212]]"
+    assert float(val("large_hole_d"))>float(val("small_hole_d"))
+    assert "large_mount_candidate_holes(left_large())" in SCAD
+    assert "large_mount_candidate_holes(right_large())" in SCAD
+    assert int(val("right_x1"))==354
+
+def test_perimeter_support_rails_and_bridges():
+    assert "for(y=[10,212])" in SCAD
+    assert "for(y=[10,117,162,212])" in SCAD
