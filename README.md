@@ -24,7 +24,7 @@ GitHub tiene un visor 3D nativo para los ficheros STL. Entra en uno de estos arc
 1. **Mástil integrado:** `integrated_root` contiene la base derecha y el arranque del mástil en un solo sólido, unido a `integrated_mid` y `integrated_tip` por solapes con 4 tornillos M4 externos. `integrated_full_right` es la versión conceptual de una sola pieza, demasiado larga para una impresora 220×220.
 2. **Mástil metálico:** `metal_base_right` incorpora una canaleta con tope interno y `metal_socket_cap` la cierra con tornillos externos. El perfil rectangular **25×3 mm es solo un ejemplo**, no se ha medido el metal real.
 
-Ambas versiones incluyen `mount_left` con una **culata trasera de ~41 mm**, el anclaje frontal cerca del mástil y **dos** `join_clip` para ensamblar las bases. Los ojos de 24×7 mm están fuera de la carcasa original, y permiten pasar una cinta textil de unos 20 mm.
+Ambas versiones incluyen `mount_left` con una **culata trasera de ~41 mm**, el anclaje frontal cerca del mástil y **cuatro** `join_clip` para ensamblar las bases. Los ojos de 24×7 mm están fuera de la carcasa original, y permiten pasar una cinta textil de unos 20 mm.
 
 **ALERTA:** la correa y el mástil NO están certificados para soportar cargas. No suspendas el teclado ni lo uses de pie hasta confirmar roscas, interferencias y resistencia de los anclajes. Más detalles en [medidas y montaje](docs/medidas-y-montaje.md) y [revisiones](docs/revisiones.md).
 
