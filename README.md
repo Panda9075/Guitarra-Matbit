@@ -1,39 +1,32 @@
-# Guitarra-Matbit — Arturia MiniLab MkII → keytar
+# Guitarra-Matbit — conversión de Arturia MiniLab MkII a keytar
 
-Modelo CAD paramétrico **V2 EN REVISIÓN**, para Arturia MiniLab MkII. Incluye los 8 tornillos interiores entregados por el propietario y **11 ubicaciones adicionales estimadas visualmente**; las estimaciones NO se taladran en el prototipo. Incluye **culata trasera y dos anclajes de correa textil**, con dos opciones de mástil.
+**Versión V3 — BORRADOR TÉCNICO, NO APROBADO PARA IMPRIMIR NI UTILIZAR CON CORREA.**
 
-## Revisión de tornillos pequeños y grandes
-Las 8 medidas iniciales no se han cambiado. Las nuevas cabezas de tornillos observadas en la periferia se marcaron como **candidatos** en amarillo, pero no se perforan hasta confirmarlas con calibre o regla (`use_unverified_large_holes=false`). Los diámetros de ambos tipos también son provisionales.
+Objetivo: fijar un soporte tipo guitarra al teclado Arturia MiniLab MkII sin perforar la carcasa original. Dos variantes de mástil comparten la base inferior. Se ha reemplazado la antigua ranura de cinta por un soporte macizo para strap buttons #6 x 25 mm, y la variante externa utiliza madera de sección 50 × 31 mm.
 
-- [Mapa preliminar de tornillos](docs/mapa-tornillos.svg) — azul: originales; dorado: aproximaciones.
-- [Lista de medidas pendientes](docs/revision-tornillos.md) — no usar de plantilla de taladrado.
+## Ver la revisión
 
-## Ver online y girar el 3D sin instalar programas
+- [Código CAD editable](cad/keytar.scad) (paramétrico en OpenSCAD).
+- [Mapa de tornillos: medidos vs. estimados](docs/mapa-tornillos.svg).
+- [Criterios de montaje y problemas sin resolver](docs/medidas-y-montaje.md).
+- [Revisión detallada de tornillos](docs/revision-tornillos.md).
+- [Acción de GitHub: STL y vistas](../../actions/workflows/cad.yml): archivos en **Artifacts** cuando termine la acción del pull request.
 
-GitHub tiene un visor 3D nativo para los ficheros STL. Entra en uno de estos archivos (con sesión iniciada, este repo es privado):
+**Los STL de `main` siguen siendo la revisión anterior** hasta validar y fusionar estos cambios. No usar los enlaces anteriores como piezas definitivas.
 
-- **[Mástil 3D integrado — montaje](models/stl/assembly_integrated.stl)**
-- **[Mástil metálico — montaje COMPLETO con perfil ilustrativo](models/stl/assembly_metal_visual.stl)**
-- **[Culata trasera / anclaje de correa](models/stl/mount_left.stl)**
-- **[Soporte para mástil metálico](models/stl/metal_base_right.stl)**
+## Piezas nuevas
 
-**Arrastra para girar, rueda para zoom y clic derecho+arrastrar para mover.** Los STL se publican automáticamente al terminar **Actions → Generar STL y revisar CAD**. Si aún no aparecen los enlaces, descarga el Artifact `STL-y-vistas-Matbit` de esa ejecución. El mástil metálico de la vista completa es ilustrativo y no debe imprimirse; la versión de piezas impresas sin metal se encuentra en [assembly_metal.stl](models/stl/assembly_metal.stl).
+**Comunes**: `mount_left` (culata y strap button trasero), `join_clip` ×4, `fit_coupon`. La base usa cuatro raíles; los ocho agujeros interiores conservan sus coordenadas. Los 11 candidatos de tornillos periféricos **se muestran como referencia, pero no se perforan hasta medirlos** (`use_unverified_large_holes=false`).
 
-## Dos diseños
+**Variante 1, mástil impreso**: `integrated_root` + `integrated_mid` + `integrated_tip` (solapes), y anclaje frontal integrado.
 
-1. **Mástil integrado:** `integrated_root` contiene la base derecha y el arranque del mástil en un solo sólido, unido a `integrated_mid` y `integrated_tip` por solapes con 4 tornillos M4 externos. `integrated_full_right` es la versión conceptual de una sola pieza, demasiado larga para una impresora 220×220.
-2. **Mástil metálico:** `metal_base_right` incorpora una canaleta con tope interno y `metal_socket_cap` la cierra con tornillos externos. El perfil rectangular **25×3 mm es solo un ejemplo**, no se ha medido el metal real.
+**Variante 2, mástil de madera**: `wood_base_right` (cuna abierta tipo U de 50 × 31 mm + holgura), `wood_socket_cap` (tapa), `wood_fit_coupon` (probeta de encaje) y **dos pernos M5 transversales** que atraviesan soporte y madera (habrá que taladrar la madera según una plantilla real). Profundidad de inserción inicial `wood_socket_depth=70` mm, **sujeta a revisión**. Los cuatro pequeños tornillos de la tapa son secundarios: no sustituyen los pernos pasantes.
 
-Ambas versiones incluyen `mount_left` con una **culata trasera de ~41 mm**, el anclaje frontal cerca del mástil y **cuatro** `join_clip` para ensamblar las bases. Los ojos de 24×7 mm están fuera de la carcasa original, y permiten pasar una cinta textil de unos 20 mm.
+**Correa**: dos refuerzos macizos con taladros piloto ciegos para los tornillos tipo madera #6 de 25 mm. Los botones metálicos son piezas compradas y no se imprimen; **el anclaje impreso y la carcasa no tienen ensayos de resistencia**. Evitar colgar el teclado hasta realizar una prueba de carga y verificar que las fuerzas no deterioren la tapa.
 
-**ALERTA:** la correa y el mástil NO están certificados para soportar cargas. No suspendas el teclado ni lo uses de pie hasta confirmar roscas, interferencias y resistencia de los anclajes. Más detalles en [medidas y montaje](docs/medidas-y-montaje.md) y [revisiones](docs/revisiones.md).
+## Generar
 
-## Código, piezas y pruebas
-
-- [CAD OpenSCAD](cad/keytar.scad) — cambiar `mode="preview_integrated"` o `mode="preview_metal"` para ver un teclado esquemático coloreado.
-- [Guía de medidas](docs/medidas-y-montaje.md)
-- [Auditoría / pendientes](docs/revisiones.md)
-- [Issue #1](../../issues/1) — validación física pendiente.
+Instala OpenSCAD, Python 3.11 y las dependencias de `requirements-dev.txt`.
 
 ```bash
 python -m pip install -r requirements-dev.txt
@@ -42,4 +35,4 @@ python scripts/build.py --all --preview
 python scripts/validate.py
 ```
 
-Se requieren OpenSCAD y Python 3.11+. GitHub Actions repite las pruebas y publica STL al repositorio si tiene permiso de escritura.
+En OpenSCAD selecciona `mode="preview_integrated"` o `mode="preview_wood"` y pulsa F5. Los archivos `assembly_wood_visual.stl` incluyen una madera **solamente ilustrativa**: no debe imprimirse como si fuera plástico.
