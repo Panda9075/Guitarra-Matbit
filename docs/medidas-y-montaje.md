@@ -1,46 +1,41 @@
-# Medidas, tolerancias y seguridad — Arturia MiniLab MkII
+# Guitarra-Matbit V4: medidas, montaje y límites de seguridad
 
-> **Revisión V3, NO validada físicamente.** No perforar la carcasa original. No suspender el instrumento por la correa, ni por el mástil, antes de ensayos.
+**Estado:** proyecto CAD de prototipo. **Mástil no incluido** a petición del propietario; el soporte deja exclusivamente el hueco para una madera externa de 50 × 31 mm. No modificar la carcasa del teclado.
 
-## Cuerpo y puntos de atornillado
+## Geometría conocida y pendiente
 
-Cuerpo: 355 mm de largo × 221 mm de ancho aproximado; origen X=0, Y=0 en esquina superior izquierda de la **vista inferior**. La orientación debe cotejarse físicamente.
+| Elemento | CAD / dato | Confianza |
+|---|---|---|
+| Instrumento | Arturia MiniLab MkII, no MiniLab 3 | Identificación del propietario |
+| Carcasa, vista inferior | 355 × 221 mm | Comunicada por propietario |
+| Altura de carcasa | 32 mm en anotación fotográfica | **Pendiente medir**; la antigua vista CAD usaba 50 mm |
+| Ocho centros de tornillo interiores | (23,117), (125,117), (225,117), (310,117), (25,162), (126,162), (225,162), (311,162) mm | Medidas comunicadas; verificar origen y orientación |
+| Otros once centros, sin medida | Ver revision-tornillos.md | Estimaciones por foto: **no perforados** |
+| Paso de tornillos de teclado | 5,5 mm provisional en CAD | **Sin diámetro/cabeza/rosca/longitud confirmados** |
+| Listón de madera | 50 × 31 mm | Proporcionado por el propietario; verificar ovalización/radios |
+| Hueco útil de cuna | 51,2 × 32,2 mm | Tolerancia de impresión estimada, no verificada |
+| Cuna | 70 mm total, 7 mm de tope | **Profundidad provisional**, madera entra ~63 mm |
+| Pasadores que cruzan madera | Dos M5 propuestos, pasos Ø5,5, local x=27/50 mm | **Propuesta**, requieren comprobar veta y acceso a tuerca |
+| Tapa y clips | 4 tornillos M3 en tapa; 8 M3 con insertos para 4 clips | **Propuesta**, insertos compatibles por medir |
+| Strap buttons | 2 tornillos #6 × 25 mm | Dato del propietario; geometría del piloto provisional |
+| Cama de impresión | 220 × 220 mm | Hipótesis; requiere espacio para borde y brim |
 
-**Ocho puntos aportados por el propietario** (mm):
-- Arriba Y=117: (23,117), (125,117), (225,117), (310,117).
-- Abajo Y=162: (25,162), (126,162), (225,162), (311,162).
+## Ensamblaje físico sugerido (no autorizado para carga)
 
-También están marcados **11 candidatos de tornillos periféricos** a partir de las fotos, documentados en [la revisión de tornillos](revision-tornillos.md). Son puntos aproximados: no se taladran en el CAD por defecto (`use_unverified_large_holes=false`). Diferenciar tornillos y patas de goma.
+1. Verificar las ocho coordenadas reales con plantilla 1:1, medir los **otros once candidatos**, las cabezas de tornillo, longitud de rosca disponible, patas, relieves y conectores. No taladrar el MiniLab.
+2. Imprimir primero wood_fit_coupon.stl y screw_fit_coupon.stl con el material, orientación y laminador previstos; medir la madera real y la impresión. Ajustar wood_clearance, diámetros y profundidad antes de imprimir piezas grandes.
+3. Presentar las dos bases bajo el teclado **desconectado**, sin forzar ni fijar hasta comprobar pies, USB y apoyos. La base tiene 5,5 mm; los tornillos originales pueden no tener enganche suficiente con esa separación.
+4. Si los insertos M3 elegidos encajan y la geometría deja espesor seguro, instalarlos en los ocho resaltes de unión. Usar los **cuatro clips** en los resaltes. No instalar insertos térmicos cerca del instrumento.
+5. Comprobar que el listón de madera entra por la boca abierta hasta el tope **sin deformar las paredes**. La tapa se atornilla con cuatro tornillos M3 de longitud adecuada.
+6. **Antes de perforar la madera**, presentar y transferir al listón las posiciones de ambos pasos M5 desde el alojamiento real, confirmar veta y acceso a dos tuercas/arandelas. Introducir pernos pasantes que impidan que la madera se salga; no depender del pegamento ni de fricción. No hay listón 3D en ningún STL.
+7. Instalar los dos strap buttons metálicos reales únicamente después de probar el diámetro y la longitud de sus tornillos #6, la orientación, la resistencia al arrancamiento y una **ruta de carga segura que no dañe la tapa electrónica**.
+8. **No colgar el instrumento de una correa ni tirar del listón** hasta completar ensayos físicos de carga estática, impactos, fatiga y confirmación de la sujeción a una estructura portante adecuada.
 
-Los diámetros nominales de paso `small_hole_d=5.5` y `large_hole_d=6.5` son **provisionales**. Una cabeza de 5 mm no significa rosca de 5 mm. El usuario sí ha confirmado el Arturia MiniLab MkII, no las dimensiones de todas las fijaciones. La base tiene espesor 4.5 mm, por lo que hay que verificar longitud de enganche si se conservan o cambian los tornillos.
+## Limitaciones no resueltas
 
-## Correa: dos strap buttons con tornillos #6 de 25 mm
-
-La antigua **ranura rectangular de 24 × 7 mm se ha eliminado**. Se han añadido:
-- Dos bosses circulares macizos de 23 mm de diámetro y 33 mm de altura desde la cara inferior del soporte.
-- Agujeros piloto ciegos de ejemplo **2.7 mm de diámetro × 27 mm de profundidad** para tornillo #6 (~3.5 mm de diámetro) de **25 mm de longitud**, dejando ~6 mm de fondo; ajustar según material y perfil real de tornillo.
-- Un boss en la culata trasera (X=-29, Y=145); otro junto a la zona de mástil (X=359, Y=139). Los dos quedan fuera del área de 355 mm en el centro del tornillo, pero la geometría total se conecta a la placa.
-
-El piloto no es una rosca validada. La resistencia del plástico impreso al arrancamiento, los esfuerzos de palanca y la tapa original pueden fallar. Considerar fijación metálica independiente después de medir y ensayar. No colgar el instrumento por estos puntos durante las pruebas dimensionales.
-
-## Mástil de madera: sección 50 × 31 mm
-
-El segundo diseño ya NO usa el canal para perfil metálico de 25 × 3 mm. En su lugar hay una cuna rectangular de perfil abierto en U, con tapa desmontable:
-- `wood_width=50` mm; `wood_thickness=31` mm.
-- `wood_clearance=0.6` mm por lado (aproximación, calibrar con `wood_fit_coupon`).
-- `wood_socket_depth=70` mm (inserción provisional; cambiar tras medir largo disponible).
-- `wood_wall=8` mm, `wood_floor=8` mm, tope interno de 7 mm.
-- Dos pasos M5 de **5.5 mm** a posiciones longitudinales locales 25 y 51 mm. Hay que **taladrar la madera** para que los pernos pasen completamente de lado a lado; usar arandelas y tuercas autofrenantes.
-- Tapa de 6 mm con cuatro agujeros de 4.5 mm para tornillos M4; la tapa evita que la madera se levante, pero los M5 previenen que el mástil se deslice.
-
-Verificar que el sentido de los agujeros transversales no debilite demasiado la madera, que la pared no tenga grietas y que no se cargue directamente una tapa electrónica flexible. Madera, tornillos, orientación y profundidad NO tienen todavía pruebas estructurales.
-
-## Impresión y procedimiento seguro
-
-1. Imprimir **solo** `fit_coupon` y `wood_fit_coupon`. Medir con calibre dimensiones finales, agujeros y holguras de la madera real.
-2. Medir ubicación y tipo de **todos** los tornillos originales en un sistema de coordenadas uniforme; revisar que los raíles no interfieran con pies, nervaduras ni puertos USB.
-3. Confirmar encaje sin forzar, sobre una superficie acolchada y con el MiniLab desconectado.
-4. Perforar únicamente la madera para los pasadores M5, usando una plantilla a escala verificada; nunca perforar el teclado.
-5. Hacer cálculo y ensayo de cargas en una fijación portante independiente antes de usar correa o levantar del mástil.
-
-Los chequeos de GitHub Actions validan geometría y cotas de fabricación aproximadas, **no la seguridad para tocar de pie**.
+- No se han recibido fotos originales como archivos en esta revisión; el resumen describe imágenes previas, pero no sustituye mediciones reales.
+- La base debe comprobar su apoyo sin bloquear conectores USB, pies, etiquetas, nervaduras o electrónica interna.
+- Las paredes de la cuna y los montajes de correa son solo geometría CAD: volumen, malla cerrada y orientación de impresión no certifican su resistencia.
+- La cuna está abierta hacia el extremo exterior; los pernos M5 son su retención axial propuesta. La tapa impide levantamiento, no es sustituto de pasadores.
+- La profundidad total 70 mm, el ángulo -18° y el centro x301/y86 pueden alterarse al medir alcance y ergonomía.
+- La separación de la tapa (1 mm) y clips (0,6 mm) en assembly_socket.stl es **solo para el visor online**. Los STL individuales se imprimen por separado.
