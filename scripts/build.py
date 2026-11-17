@@ -6,10 +6,10 @@ import shutil, subprocess, sys
 ROOT=Path(__file__).resolve().parents[1]
 SCAD=ROOT/"cad"/"keytar.scad"
 OUT=ROOT/"output"
-PARTS=("mount_left","join_clip","integrated_root","integrated_mid","integrated_tip","metal_base_right","metal_socket_cap","fit_coupon")
-ASSEMBLIES=("assembly_integrated","assembly_metal","assembly_metal_visual")
+PARTS=("mount_left","join_clip","integrated_root","integrated_mid","integrated_tip","wood_base_right","wood_socket_cap","wood_fit_coupon","fit_coupon")
+ASSEMBLIES=("assembly_integrated","assembly_wood","assembly_wood_visual")
 EXTRA=("integrated_full_right",)
-PREVIEWS=("preview_integrated","preview_metal")
+PREVIEWS=("preview_integrated","preview_wood")
 ALL_STL=PARTS+ASSEMBLIES+EXTRA
 
 def export(mode,path):
