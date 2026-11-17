@@ -1,40 +1,46 @@
-# Medidas y montaje V2 — borrador, no aprobado para impresión definitiva
+# Medidas, tolerancias y seguridad — Arturia MiniLab MkII
 
-## Sistema de coordenadas
+> **Revisión V3, NO validada físicamente.** No perforar la carcasa original. No suspender el instrumento por la correa, ni por el mástil, antes de ensayos.
 
-En la **tapa inferior** del teclado, X izquierda→derecha, Y arriba→abajo. Origen en esquina superior izquierda de la vista inferior, pendiente de confirmar en el objeto real. Todas las unidades son milímetros.
+## Cuerpo y puntos de atornillado
 
-- Instrumento Arturia MiniLab MkII: 355×221 mm en planta según foto/medición; altura de referencia 50 mm.
-- Tornillos fila alta Y=117: (23,117), (125,117), (225,117), (310,117).
-- Tornillos fila baja Y=162: (25,162), (126,162), (225,162), (311,162).
-- Diámetros de paso provisionales `small_hole_d=5.5` mm y `large_hole_d=6.5` mm: **SIN VALIDAR**. La anotación fotográfica «0.5 cm» NO identifica tipo de tornillo ni rosca.
-- Perfil metálico ejemplificativo rectangular **25×3 mm**; debe medirse. Un perfil redondo exigiría cambiar el diseño.
+Cuerpo: 355 mm de largo × 221 mm de ancho aproximado; origen X=0, Y=0 en esquina superior izquierda de la **vista inferior**. La orientación debe cotejarse físicamente.
 
-## Tornillos adicionales fotografiados
-Además de los 8 tornillos centrales medidos, hay múltiples fijaciones del perímetro y de la parte central. Un mapa provisional está en [mapa-tornillos.svg](mapa-tornillos.svg). Las 11 ubicaciones propuestas son **estimaciones de foto**, no medidas con calibre, y `use_unverified_large_holes=false` impide taladrarlas en el STL. No se garantiza que estén todos los tornillos visibles. Las cuatro patas de goma no deben confundirse con fijaciones.
+**Ocho puntos aportados por el propietario** (mm):
+- Arriba Y=117: (23,117), (125,117), (225,117), (310,117).
+- Abajo Y=162: (25,162), (126,162), (225,162), (311,162).
 
-Se añadieron raíles provisionales junto a Y=10 y Y=212 mm y travesaños hasta esos raíles para estudiar los tornillos del perímetro. **Comprobar interferencias con patas, ranuras, nervaduras y otros componentes.** Las piezas de base usan ahora casi toda la altura de una cama 220×220 mm, por lo que el brim podría no caber.
+También están marcados **11 candidatos de tornillos periféricos** a partir de las fotos, documentados en [la revisión de tornillos](revision-tornillos.md). Son puntos aproximados: no se taladran en el CAD por defecto (`use_unverified_large_holes=false`). Diferenciar tornillos y patas de goma.
 
-## Correa: dos ojos impresos fuera del teclado
+Los diámetros nominales de paso `small_hole_d=5.5` y `large_hole_d=6.5` son **provisionales**. Una cabeza de 5 mm no significa rosca de 5 mm. El usuario sí ha confirmado el Arturia MiniLab MkII, no las dimensiones de todas las fijaciones. La base tiene espesor 4.5 mm, por lo que hay que verificar longitud de enganche si se conservan o cambian los tornillos.
 
-- **Culata trasera:** pieza única con `mount_left`, se prolonga ~41 mm a la izquierda. Centro de ojo (-25,145).
-- **Oreja frontal:** integrada en ambas bases derechas junto al origen del mástil. Centro de ojo (359,139).
-- Ojos de 24×7 mm para una cinta de aproximadamente 20 mm, no para strap-buttons convencionales.
-- Se transfieren esfuerzos a los cuatro tornillos de cada sector de la tapa. **No se ha probado si la tapa, el plástico, los tornillos y la correa pueden soportar la carga del teclado y la palanca del mástil. NO colgar el instrumento** hasta prueba específica; probablemente convenga una fijación portante envolvente independiente.
+## Correa: dos strap buttons con tornillos #6 de 25 mm
 
-## Antes de imprimir o montar
+La antigua **ranura rectangular de 24 × 7 mm se ha eliminado**. Se han añadido:
+- Dos bosses circulares macizos de 23 mm de diámetro y 33 mm de altura desde la cara inferior del soporte.
+- Agujeros piloto ciegos de ejemplo **2.7 mm de diámetro × 27 mm de profundidad** para tornillo #6 (~3.5 mm de diámetro) de **25 mm de longitud**, dejando ~6 mm de fondo; ajustar según material y perfil real de tornillo.
+- Un boss en la culata trasera (X=-29, Y=145); otro junto a la zona de mástil (X=359, Y=139). Los dos quedan fuera del área de 355 mm en el centro del tornillo, pero la geometría total se conecta a la placa.
 
-1. Hacer plantilla a escala real de los 8 centros y verificar orientación X/Y con calibre.
-2. Imprimir primero `fit_coupon.stl`, comprobar diámetro de agujeros y encaje; identificar **cada** tornillo original (cabeza, rosca, diámetro, profundidad y longitud de enganche).
-3. La base añade 4.5 mm bajo la carcasa: los tornillos originales podrían quedar cortos; nunca poner otros más largos sin conocer profundidad del alojamiento y evitar daño a electrónica/teclas.
-4. Comprobar patas de goma, nervaduras, puertos, USB, etiquetas y cables para descartar interferencias.
-5. Unir las dos bases en X=170 mediante cuatro `join_clip` con 4 fijaciones M3 externas y tuercas; no confundirlas con tornillos del teclado.
-6. Para mástil 3D, usar dos empalmes solapados con un total de cuatro tornillos M4 externos; comprobar flexión y grietas.
-7. Para perfil metálico, el alojamiento usa pared de 9 mm y tope interior de 7 mm, con tapa de 4 tornillos M4. **Sigue faltando retención positiva contra deslizamiento hacia afuera**; no confiar la carga a la fricción del apriete.
-8. Probar en mesa acolchada, desconectado, sin levantarlo por mástil o correa. Revisar fisuras/holgura tras ensayos.
+El piloto no es una rosca validada. La resistencia del plástico impreso al arrancamiento, los esfuerzos de palanca y la tapa original pueden fallar. Considerar fijación metálica independiente después de medir y ensayar. No colgar el instrumento por estos puntos durante las pruebas dimensionales.
 
-## Impresión / límites
+## Mástil de madera: sección 50 × 31 mm
 
-Para primeras pruebas: PETG 4–6 perímetros, relleno 30–40% orientativo, condicionado a ensayos. Todas las **piezas separadas** caben teóricamente en cama 220×220 mm (sin margen para brim); el mástil monolítico conceptual no cabe. La versión de mástil metálico utiliza menos polímero.
+El segundo diseño ya NO usa el canal para perfil metálico de 25 × 3 mm. En su lugar hay una cuna rectangular de perfil abierto en U, con tapa desmontable:
+- `wood_width=50` mm; `wood_thickness=31` mm.
+- `wood_clearance=0.6` mm por lado (aproximación, calibrar con `wood_fit_coupon`).
+- `wood_socket_depth=70` mm (inserción provisional; cambiar tras medir largo disponible).
+- `wood_wall=8` mm, `wood_floor=8` mm, tope interno de 7 mm.
+- Dos pasos M5 de **5.5 mm** a posiciones longitudinales locales 25 y 51 mm. Hay que **taladrar la madera** para que los pernos pasen completamente de lado a lado; usar arandelas y tuercas autofrenantes.
+- Tapa de 6 mm con cuatro agujeros de 4.5 mm para tornillos M4; la tapa evita que la madera se levante, pero los M5 previenen que el mástil se deslice.
 
-El éxito de GitHub Actions garantiza **solamente** que el CAD genera mallas cerradas con medidas dentro del límite, NO validación de fabricación, encaje, ergonomía ni resistencia estructural.
+Verificar que el sentido de los agujeros transversales no debilite demasiado la madera, que la pared no tenga grietas y que no se cargue directamente una tapa electrónica flexible. Madera, tornillos, orientación y profundidad NO tienen todavía pruebas estructurales.
+
+## Impresión y procedimiento seguro
+
+1. Imprimir **solo** `fit_coupon` y `wood_fit_coupon`. Medir con calibre dimensiones finales, agujeros y holguras de la madera real.
+2. Medir ubicación y tipo de **todos** los tornillos originales en un sistema de coordenadas uniforme; revisar que los raíles no interfieran con pies, nervaduras ni puertos USB.
+3. Confirmar encaje sin forzar, sobre una superficie acolchada y con el MiniLab desconectado.
+4. Perforar únicamente la madera para los pasadores M5, usando una plantilla a escala verificada; nunca perforar el teclado.
+5. Hacer cálculo y ensayo de cargas en una fijación portante independiente antes de usar correa o levantar del mástil.
+
+Los chequeos de GitHub Actions validan geometría y cotas de fabricación aproximadas, **no la seguridad para tocar de pie**.
