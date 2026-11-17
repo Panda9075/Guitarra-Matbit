@@ -1,9 +1,10 @@
-name: Generar STL y revisar CAD
+name: Generar STL y revisar CAD V4
 on:
   push:
-    branches: [main]
+    branches: [main, feature/socket-only-v4]
     paths-ignore:
       - 'models/stl/**'
+      - 'docs/preview_socket.png'
   pull_request:
   workflow_dispatch:
 permissions:
@@ -20,29 +21,30 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Instalar dependencias
+      - name: Instalar dependencias (incluye graph engine de trimesh)
         run: python -m pip install -r requirements-dev.txt
-      - name: Probar medidas
+      - name: Probar medidas y exclusión del mástil
         run: python -m pytest -q
-      - name: Generar STL y vistas
+      - name: Generar STL y vista
         run: python scripts/build.py --all --preview
-      - name: Validar mallas y cama de impresion
+      - name: Validar mallas individuales y cama de impresión
         run: python scripts/validate.py
       - uses: actions/upload-artifact@v4
         with:
-          name: STL-y-vistas-Matbit
+          name: Guitarra-Matbit-V4-socket-only
           path: output/
           retention-days: 30
-      - name: Publicar STL en repositorio para ver online
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+      - name: Publicar STL y vista actualizados en la rama
+        if: github.event_name == 'push'
         run: |
           rm -rf models/stl
-          mkdir -p models/stl
+          mkdir -p models/stl docs
           cp output/*.stl models/stl/
+          cp output/preview_socket.png docs/preview_socket.png
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A models/stl/
+          git add -A models/stl/ docs/preview_socket.png
           if ! git diff --cached --quiet; then
-            git commit -m 'chore(cad): export verified 3D STL [skip ci]'
-            git push origin HEAD:main
+            git commit -m 'chore(cad): publicar STLs V4 comprobados [skip ci]'
+            git push origin "HEAD:$GITHUB_REF_NAME"
           fi
