@@ -19,8 +19,11 @@ mount_hole_d=small_hole_d;
 join_hole_d=3.5; lap_hole_d=4.5;
 plate_t=4.5; rail_w=18; brace_w=16; left_x0=14; seam_x=170; right_x1=354;
 // Strap anchors: not approved for load bearing until physical testing.
-strap_slot_w=7; strap_slot_length=24; strap_rear_x=-25; strap_rear_y=145;
-strap_front_x=359; strap_front_y=139; strap_extra_t=3;
+// Replace strap slots with thick blind-screw mounts for #6 x25mm strap buttons.
+strap_rear_x=-29; strap_rear_y=145; strap_front_x=359; strap_front_y=139;
+strap_extra_t=3; strap_boss_d=23; strap_boss_h=33;
+strap_screw_nominal_d=3.5; strap_screw_length=25;
+strap_pilot_d=2.7; strap_pilot_depth=27;
 metal_bar_w=25; // PLACEHOLDER rectangular metal profile
 metal_bar_t=3;  // PLACEHOLDER rectangular metal profile
 metal_clearance=0.6;
@@ -54,13 +57,13 @@ module keyboard_screw_holes(points) {
 module join_screw_holes(x) {
   for(y=[10,117,162,212]) translate([x,y,-1]) cylinder(d=join_hole_d,h=plate_t+23);
 }
-// Closed textile loop slots, both OUTSIDE the original instrument footprint.
-module strap_slot(cx,cy) {
-  translate([0,0,-1]) linear_extrude(height=plate_t+strap_extra_t+2)
-  hull() {
-    translate([cx,cy-(strap_slot_length-strap_slot_w)/2]) circle(d=strap_slot_w);
-    translate([cx,cy+(strap_slot_length-strap_slot_w)/2]) circle(d=strap_slot_w);
-  }
+// Solid strap button mounts with BLIND pilot holes.
+module strap_boss(cx,cy) {
+  translate([cx,cy,0]) cylinder(d=strap_boss_d,h=strap_boss_h);
+}
+module strap_pilot(cx,cy) {
+  translate([cx,cy,strap_boss_h-strap_pilot_depth])
+    cylinder(d=strap_pilot_d,h=strap_pilot_depth+1);
 }
 module rear_horn() {
   linear_extrude(height=plate_t+strap_extra_t)
@@ -82,11 +85,11 @@ module front_horn() {
 }
 module mount_left() {
   difference() {
-    union() { mount_rails(left_x0,seam_x); vertical_brace(12); vertical_brace(125); rear_horn(); }
+    union() { mount_rails(left_x0,seam_x); vertical_brace(12); vertical_brace(125); rear_horn(); strap_boss(strap_rear_x,strap_rear_y); }
     keyboard_screw_holes([mount_top[0],mount_top[1],mount_bottom[0],mount_bottom[1]]);
     large_mount_candidate_holes(left_large());
     join_screw_holes(161);
-    strap_slot(strap_rear_x,strap_rear_y);
+    strap_pilot(strap_rear_x,strap_rear_y);
   }
 }
 module root_gusset() {
@@ -95,7 +98,7 @@ module root_gusset() {
                     [327,151],[306,170],[285,170],[296,139]]);
 }
 module mount_right_blank() {
-  union() { mount_rails(seam_x,right_x1); vertical_brace(238); vertical_brace(346); root_gusset(); front_horn(); }
+  union() { mount_rails(seam_x,right_x1); vertical_brace(238); vertical_brace(346); root_gusset(); front_horn(); strap_boss(strap_front_x,strap_front_y); }
 }
 module mount_right() {
   difference() {
@@ -103,7 +106,7 @@ module mount_right() {
     keyboard_screw_holes([mount_top[2],mount_top[3],mount_bottom[2],mount_bottom[3]]);
     large_mount_candidate_holes(right_large());
     join_screw_holes(179);
-    strap_slot(strap_front_x,strap_front_y);
+    strap_pilot(strap_front_x,strap_front_y);
   }
 }
 module join_clip() {
@@ -158,7 +161,7 @@ module integrated_root() {
     keyboard_screw_holes([mount_top[2],mount_top[3],mount_bottom[2],mount_bottom[3]]);
     large_mount_candidate_holes(right_large());
     join_screw_holes(179);
-    strap_slot(strap_front_x,strap_front_y);
+    strap_pilot(strap_front_x,strap_front_y);
   }
 }
 module integrated_full_right() {
@@ -167,7 +170,7 @@ module integrated_full_right() {
     keyboard_screw_holes([mount_top[2],mount_top[3],mount_bottom[2],mount_bottom[3]]);
     large_mount_candidate_holes(right_large());
     join_screw_holes(179);
-    strap_slot(strap_front_x,strap_front_y);
+    strap_pilot(strap_front_x,strap_front_y);
   }
 }
 function channel_w()=metal_bar_w+2*metal_clearance;
@@ -198,7 +201,7 @@ module metal_base_right() {
     keyboard_screw_holes([mount_top[2],mount_top[3],mount_bottom[2],mount_bottom[3]]);
     large_mount_candidate_holes(right_large());
     join_screw_holes(179);
-    strap_slot(strap_front_x,strap_front_y);
+    strap_pilot(strap_front_x,strap_front_y);
   }
 }
 module fit_coupon() {
