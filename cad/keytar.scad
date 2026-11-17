@@ -1,8 +1,8 @@
 // Guitarra Matbit / Arturia MiniLab MkII. ALL UNITS IN MILLIMETERS.
 // PROTOTYPE ONLY. Dimensions of mounting screws and metal bar are NOT validated.
 // Coordinate frame: underside view, X left->right, Y top->bottom, Z away from keyboard.
-// Export: openscad -o part.stl -D 'mode="metal_base_right"' cad/keytar.scad
-mode="preview_metal"; $fn=32;
+// Export: openscad -o part.stl -D 'mode="wood_base_right"' cad/keytar.scad
+mode="preview_wood"; $fn=32;
 keyboard_x=355; keyboard_y=221; keyboard_z=50;
 mount_top=[[23,117],[125,117],[225,117],[310,117]];
 mount_bottom=[[25,162],[126,162],[225,162],[311,162]];
@@ -24,10 +24,11 @@ strap_rear_x=-29; strap_rear_y=145; strap_front_x=359; strap_front_y=139;
 strap_extra_t=3; strap_boss_d=23; strap_boss_h=33;
 strap_screw_nominal_d=3.5; strap_screw_length=25;
 strap_pilot_d=2.7; strap_pilot_depth=27;
-metal_bar_w=25; // PLACEHOLDER rectangular metal profile
-metal_bar_t=3;  // PLACEHOLDER rectangular metal profile
-metal_clearance=0.6;
-socket_len=72; socket_wall=9; socket_floor=5; cap_t=5; socket_stop_t=7;
+// Rectangular wooden neck, cross-section 50 x 31 mm; insertion depth provisional.
+wood_width=50; wood_thickness=31; wood_clearance=0.6;
+wood_socket_depth=70; wood_wall=8; wood_floor=8; wood_stop=7; wood_cap_t=6;
+wood_crossbolt_d=5.5; wood_crossbolt_x=[25,51]; // M5 bolts through wood.
+wood_lid_pilot_d=3.3; wood_lid_clearance_d=4.5; wood_lid_fastener_x=[16,58];
 neck_x=308; neck_y=87; neck_angle=-18; neck_t=12;
 neck_len=375; head_len=35; neck_start_w=48; neck_end_w=31;
 first_joint=50; second_joint=220; joint_lap=20; neck_bolt_offset=11;
@@ -173,29 +174,58 @@ module integrated_full_right() {
     strap_pilot(strap_front_x,strap_front_y);
   }
 }
-function channel_w()=metal_bar_w+2*metal_clearance;
-function socket_w()=channel_w()+2*socket_wall;
-function socket_h()=socket_floor+metal_bar_t-0.2;
+// The wood is captured in a rectangular recess, then pinned with TWO M5 bolts.
+function channel_w()=wood_width+2*wood_clearance;
+function socket_w()=channel_w()+2*wood_wall;
+function socket_h()=wood_floor+wood_thickness+2*wood_clearance;
+function bolt_center_z()=wood_floor+wood_thickness/2+wood_clearance;
+function lid_y()=channel_w()/2+wood_wall/2;
+module crossbolt_bores() {
+  for(x=wood_crossbolt_x)
+    translate([x,-socket_w()/2-1,bolt_center_z()])
+      rotate([-90,0,0]) cylinder(d=wood_crossbolt_d,h=socket_w()+2);
+}
 module socket_cradle() {
   difference() {
-    cubexy(0,socket_len,-socket_w()/2,socket_w()/2,socket_h());
-    // Fixed 7mm inner end stop: metal slides in from the outer end.
-    cubexy(socket_stop_t,socket_len+1,-channel_w()/2,channel_w()/2,socket_h()+1,socket_floor);
-    for(x=[19,53],y=[-socket_w()/2+socket_wall/2,socket_w()/2-socket_wall/2])
-      translate([x,y,-1]) cylinder(d=lap_hole_d,h=socket_h()+4);
+    union() {
+      // Floor + U side cheeks + blind root stop; front is open.
+      cubexy(0,wood_socket_depth,-socket_w()/2,socket_w()/2,wood_floor);
+      cubexy(0,wood_socket_depth,-socket_w()/2,-channel_w()/2,socket_h());
+      cubexy(0,wood_socket_depth,channel_w()/2,socket_w()/2,socket_h());
+      cubexy(0,wood_stop,-channel_w()/2,channel_w()/2,socket_h());
+    }
+    crossbolt_bores();
+    // Lid retains top, but the M5 cross-bolts bear the axial tension.
+    for(x=wood_lid_fastener_x,y=[-lid_y(),lid_y()])
+      translate([x,y,socket_h()-13])
+        cylinder(d=wood_lid_pilot_d,h=15);
   }
 }
 module socket_cap() {
   difference() {
-    cubexy(0,socket_len,-socket_w()/2,socket_w()/2,cap_t);
-    for(x=[19,53],y=[-socket_w()/2+socket_wall/2,socket_w()/2-socket_wall/2])
-      translate([x,y,-1]) cylinder(d=lap_hole_d,h=cap_t+2);
+    cubexy(0,wood_socket_depth,-socket_w()/2,socket_w()/2,wood_cap_t);
+    for(x=wood_lid_fastener_x,y=[-lid_y(),lid_y()])
+      translate([x,y,-1])
+        cylinder(d=wood_lid_clearance_d,h=wood_cap_t+2);
+  }
+}
+module wood_visual_segment() {
+  // Only the exposed length, not the concealed inner section. NOT printable.
+  cubexy(wood_socket_depth+1,neck_len+head_len,-wood_width/2,wood_width/2,
+    wood_thickness,wood_floor+wood_clearance);
+}
+module wood_fit_coupon() {
+  // A short open channel to verify the owner's real wood width and thickness.
+  difference() {
+    cubexy(0,12,-socket_w()/2,socket_w()/2,socket_h());
+    cubexy(-1,13,-channel_w()/2,channel_w()/2,
+      socket_h()+1,wood_floor);
   }
 }
 module socket_placed() {
   translate([neck_x,neck_y,plate_t]) rotate([0,0,neck_angle]) children();
 }
-module metal_base_right() {
+module wood_base_right() {
   difference() {
     union() { mount_right_blank(); socket_placed() socket_cradle(); }
     keyboard_screw_holes([mount_top[2],mount_top[3],mount_bottom[2],mount_bottom[3]]);
@@ -211,24 +241,22 @@ module fit_coupon() {
       cylinder(d=3+i*0.5,h=plate_t+2);
   }
 }
-module join_clips_placed() { for(y=[117,162]) translate([0,y,plate_t]) join_clip(); }
+module join_clips_placed() { for(y=[10,117,162,212]) translate([0,y,plate_t]) join_clip(); }
 module assembly_integrated() {
   mount_left(); integrated_root();
   neck_placed() neck_piece(1); neck_placed() neck_piece(2);
   join_clips_placed();
 }
-module assembly_metal() {
-  mount_left(); metal_base_right(); join_clips_placed();
+module assembly_wood() {
+  mount_left(); wood_base_right(); join_clips_placed();
   // Deliberate 0.4mm exploded viewing gap avoids overlapping/coplanar STL surfaces.
   socket_placed() translate([0,0,socket_h()+0.4]) socket_cap();
-  // Metal stock is intentionally EXCLUDED (not an STL printable component).
+  // Wood stock is intentionally EXCLUDED (not an STL printable component).
 }
-// VISUALIZATION ONLY. Approximate external metal shaft is not a printable component.
-// 1 mm gap at socket mouth prevents mesh overlap / coplanar faces.
-module assembly_metal_visual() {
-  assembly_metal();
-  socket_placed() cubexy(socket_len+1,neck_len+head_len,
-    -metal_bar_w/2,metal_bar_w/2,metal_bar_t,socket_floor);
+// VISUALIZATION ONLY. Exposed rectangular wooden shaft is NOT a printed part.
+module assembly_wood_visual() {
+  assembly_wood();
+  socket_placed() wood_visual_segment();
 }
 module preview_case() { color([0.8,0.8,0.8,0.28]) cubexy(0,keyboard_x,0,keyboard_y,keyboard_z,-keyboard_z); }
 module preview_screws() {
@@ -249,13 +277,12 @@ module preview_integrated() {
   }
   preview_screws();
 }
-module preview_metal() {
+module preview_wood() {
   preview_case();
-  color([0.83,0.25,0.18]) { mount_left(); metal_base_right(); bridges_placed(); }
+  color([0.83,0.25,0.18]) { mount_left(); wood_base_right(); bridges_placed(); }
   color([0.95,0.7,0.2]) socket_placed()
-    translate([0,0,socket_h()]) socket_cap();
-  color([0.5,0.58,0.64,0.65]) socket_placed()
-    cubexy(8,255,-metal_bar_w/2,metal_bar_w/2,metal_bar_t,socket_floor);
+    translate([0,0,socket_h()+0.4]) socket_cap();
+  color([0.57,0.33,0.14,0.8]) socket_placed() wood_visual_segment();
   preview_screws();
 }
 if(mode=="mount_left") mount_left();
@@ -264,13 +291,14 @@ else if(mode=="integrated_root") integrated_root();
 else if(mode=="integrated_mid") neck_piece(1);
 else if(mode=="integrated_tip") neck_piece(2);
 else if(mode=="integrated_full_right") integrated_full_right();
-else if(mode=="metal_base_right") metal_base_right();
-else if(mode=="metal_socket_cap") socket_cap();
+else if(mode=="wood_base_right") wood_base_right();
+else if(mode=="wood_socket_cap") socket_cap();
+else if(mode=="wood_fit_coupon") wood_fit_coupon();
 else if(mode=="join_clip") join_clip();
 else if(mode=="fit_coupon") fit_coupon();
 else if(mode=="assembly_integrated") assembly_integrated();
-else if(mode=="assembly_metal") assembly_metal();
-else if(mode=="assembly_metal_visual") assembly_metal_visual();
+else if(mode=="assembly_wood") assembly_wood();
+else if(mode=="assembly_wood_visual") assembly_wood_visual();
 else if(mode=="preview_integrated") preview_integrated();
-else if(mode=="preview_metal") preview_metal();
+else if(mode=="preview_wood") preview_wood();
 else echo("Unknown mode",mode);
