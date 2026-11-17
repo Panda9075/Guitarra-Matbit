@@ -1,33 +1,50 @@
 #!/usr/bin/env python3
-"""Check all generated STL solids. Not a proof of screw fit, fatigue or suspension."""
-import sys
+"""Static checks of the V4 printable STLs. NOT a mechanical safety certificate."""
 from pathlib import Path
+import math
+import sys
 import trimesh
-OUT=Path(__file__).resolve().parents[1]/"output"
-BOUNDS={"mount_left":(220,220),"join_clip":(60,40),
-"integrated_root":(220,220),"integrated_mid":(220,80),
-"integrated_tip":(220,80),"wood_base_right":(220,220),
-"wood_socket_cap":(110,90),"wood_fit_coupon":(110,90),"fit_coupon":(110,40)}
-ASSEMBLIES=("assembly_integrated","assembly_wood","assembly_wood_visual")
-def validate():
-    issues=[]
-    for name in (*BOUNDS,*ASSEMBLIES):
-        path=OUT/(name+".stl")
-        if not path.exists(): issues.append("Missing "+path.name);continue
-        m=trimesh.load_mesh(path,force="mesh")
-        x,y,z=[float(v) for v in m.extents]
-        print(f"{name:22} {x:6.1f} x {y:6.1f} x {z:5.1f} mm; closed={m.is_watertight}; volume={m.volume/1000:.1f} cm3")
-        if name in BOUNDS and len(m.split(only_watertight=False))!=1:
-            issues.append(name+" contains disconnected solids")
-        if not m.is_watertight or not m.is_winding_consistent or m.volume<=0:
-            issues.append(name+" invalid mesh")
-        if name in BOUNDS:
-            limx,limy=BOUNDS[name]
-            if x>limx+.05 or y>limy+.05 or z>55: issues.append(name+" exceeds 220mm bed assumptions")
-        if name=="mount_left" and not m.bounds[0,0]<-39:issues.append("rear strap extension missing")
-        if name in ("integrated_root","wood_base_right") and not m.bounds[1,0]>370:issues.append(name+" front strap extension missing")
-    if issues:
-        print("ERRORS:\n"+"\n".join(issues),file=sys.stderr);return 1
-    print("PASS geometric checks; physical installation and strap loads are NOT validated.")
+
+OUT = Path(__file__).resolve().parents[1] / 'output'
+PARTS = ('mount_left', 'socket_base_right', 'socket_cap', 'join_clip',
+         'wood_fit_coupon', 'screw_fit_coupon')
+MODELS = PARTS + ('assembly_socket',)
+BED = 220.0
+# 2 mm edge allowance per side (brim may need more; verify in slicer).
+PRINT_ENVELOPE = 216.0
+
+
+def validate() -> int:
+    failures = []
+    for name in MODELS:
+        path = OUT / (name + '.stl')
+        if not path.is_file():
+            failures.append(f'{name}: STL inexistente')
+            continue
+        mesh = trimesh.load_mesh(path, force='mesh')
+        x, y, z = [float(v) for v in mesh.extents]
+        volume = float(mesh.volume)
+        count = len(mesh.split(only_watertight=False))
+        print(f'{name:20} {x:6.1f} x {y:6.1f} x {z:5.1f} mm | '
+              f'vol={volume / 1000:7.1f} cm³ | shells={count} | watertight={mesh.is_watertight}')
+        if not (mesh.is_watertight and mesh.is_winding_consistent and volume > 1):
+            failures.append(f'{name}: malla abierta/invertida o volumen nulo')
+        if not all(math.isfinite(float(q)) for q in mesh.bounds.flatten()):
+            failures.append(f'{name}: límites no finitos')
+        if name in PARTS:
+            # Rotating a piece 90 degrees in the XY print plane is permitted.
+            if max(x, y) > PRINT_ENVELOPE or min(x, y) > PRINT_ENVELOPE:
+                failures.append(f'{name}: superficie {x:.1f} x {y:.1f} mayor a {PRINT_ENVELOPE} mm')
+            if count != 1:
+                failures.append(f'{name}: contiene {count} piezas desconectadas; revisar uniones CAD')
+        if name == 'assembly_socket' and (x < 370 or x > 460):
+            failures.append('assembly_socket: extensión total inesperada')
+    if failures:
+        print('ERRORES:\n' + '\n'.join(failures), file=sys.stderr)
+        return 1
+    print('OK: validación geométrica automatizada; montaje y resistencia física PENDIENTES')
     return 0
-if __name__=="__main__":sys.exit(validate())
+
+
+if __name__ == '__main__':
+    sys.exit(validate())
