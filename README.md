@@ -1,5 +1,7 @@
 # Guitarra-Matbit — Arturia MiniLab MkII a keytar | V4
 
+> **⛔ BLOQUEO DE TORNILLERÍA (auditoría V5): NO imprimir ni instalar por ahora.** Los 8 centros facilitados anteriormente siguen sin cotejo físico; los otros 11 son estimaciones fotográficas, y el diámetro Ø5,5 mm del CAD no está confirmado. **No se ha cambiado la posición de ningún agujero sin medición.** Consulta la [auditoría exclusiva de tornillos](docs/revision-tornillos.md), la [plantilla 1:1 A3](docs/plantilla_tornillos_A3.svg), las [hojas A4 izquierda](docs/plantilla_tornillos_A4_izquierda.svg) y [derecha](docs/plantilla_tornillos_A4_derecha.svg), y el [registro de comprobación](docs/registro-tornillos.csv). No avanzar con otras mejoras hasta verificar el patrón real.
+
 > **Prototipo CAD, NO validado físicamente.** No usar la correa para sostener el MiniLab ni levantarlo por el alojamiento sin validación estructural. Ningún software garantiza el encaje real o la seguridad.
 
 ## [Abrir el modelo 3D completo (STL)](models/stl/assembly_socket.stl)

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+<rect width="210" height="297" fill="white"/>
+<text x="12" y="10" font-family="sans-serif" font-size="5" font-weight="bold">MATBIT | PLANTILLA 1:1 A4 | DERECHA</text>
+<text x="12" y="17" font-family="sans-serif" font-size="3.25">SOLO COMPROBACIÓN · NO PERFORAR TECLADO · IMPRIMIR 100 % · NO AJUSTAR PÁGINA</text>
+<text x="12" y="24" font-family="sans-serif" font-size="3.25">Vista INFERIOR (mirando por debajo). X derecha / Y abajo. Comprobar orientación.</text>
+<defs><clipPath id="area"><rect x="12" y="38" width="185" height="221"/></clipPath></defs>
+<rect x="12" y="38" width="185" height="221" fill="#f8fafc" stroke="#64748b" stroke-width=".3"/>
+<g clip-path="url(#area)"><rect x="-158" y="38" width="355" height="221" fill="none" stroke="#111827" stroke-width=".5"/>
+<g data-source="usuario" data-id="P3" data-x="225" data-y="117"><circle cx="67" cy="155" r="3.5" fill="none" stroke="#2563eb" stroke-width=".45"/><path d="M 62 155 h 10 M 67 150 v 10" stroke="#2563eb" stroke-width=".3"/><text x="72" y="153" font-family="sans-serif" font-size="3.5" fill="#1e40af">P3</text></g>
+<g data-source="usuario" data-id="P4" data-x="310" data-y="117"><circle cx="152" cy="155" r="3.5" fill="none" stroke="#2563eb" stroke-width=".45"/><path d="M 147 155 h 10 M 152 150 v 10" stroke="#2563eb" stroke-width=".3"/><text x="157" y="153" font-family="sans-serif" font-size="3.5" fill="#1e40af">P4</text></g>
+<g data-source="usuario" data-id="P7" data-x="225" data-y="162"><circle cx="67" cy="200" r="3.5" fill="none" stroke="#2563eb" stroke-width=".45"/><path d="M 62 200 h 10 M 67 195 v 10" stroke="#2563eb" stroke-width=".3"/><text x="72" y="198" font-family="sans-serif" font-size="3.5" fill="#1e40af">P7</text></g>
+<g data-source="usuario" data-id="P8" data-x="311" data-y="162"><circle cx="153" cy="200" r="3.5" fill="none" stroke="#2563eb" stroke-width=".45"/><path d="M 148 200 h 10 M 153 195 v 10" stroke="#2563eb" stroke-width=".3"/><text x="158" y="198" font-family="sans-serif" font-size="3.5" fill="#1e40af">P8</text></g>
+<g data-source="foto-estimada" data-id="E3" data-x="238" data-y="12"><circle cx="80" cy="50" r="4" fill="none" stroke="#b45309" stroke-width=".4" stroke-dasharray="1.2 .9"/><path d="M 77.7 47.7 l 4.6 4.6 M 77.7 52.3 l 4.6 -4.6" stroke="#b45309" stroke-width=".32"/><text x="85" y="53" font-family="sans-serif" font-size="3.2" fill="#92400e">E3?</text></g>
+<g data-source="foto-estimada" data-id="E4" data-x="345" data-y="9"><circle cx="187" cy="47" r="4" fill="none" stroke="#b45309" stroke-width=".4" stroke-dasharray="1.2 .9"/><path d="M 184.7 44.7 l 4.6 4.6 M 184.7 49.3 l 4.6 -4.6" stroke="#b45309" stroke-width=".32"/><text x="192" y="50" font-family="sans-serif" font-size="3.2" fill="#92400e">E4?</text></g>
+<g data-source="foto-estimada" data-id="E6" data-x="238" data-y="109"><circle cx="80" cy="147" r="4" fill="none" stroke="#b45309" stroke-width=".4" stroke-dasharray="1.2 .9"/><path d="M 77.7 144.7 l 4.6 4.6 M 77.7 149.3 l 4.6 -4.6" stroke="#b45309" stroke-width=".32"/><text x="85" y="150" font-family="sans-serif" font-size="3.2" fill="#92400e">E6?</text></g>
+<g data-source="foto-estimada" data-id="E7" data-x="346" data-y="112"><circle cx="188" cy="150" r="4" fill="none" stroke="#b45309" stroke-width=".4" stroke-dasharray="1.2 .9"/><path d="M 185.7 147.7 l 4.6 4.6 M 185.7 152.3 l 4.6 -4.6" stroke="#b45309" stroke-width=".32"/><text x="193" y="153" font-family="sans-serif" font-size="3.2" fill="#92400e">E7?</text></g>
+<g data-source="foto-estimada" data-id="E10" data-x="237" data-y="215"><circle cx="79" cy="253" r="4" fill="none" stroke="#b45309" stroke-width=".4" stroke-dasharray="1.2 .9"/><path d="M 76.7 250.7 l 4.6 4.6 M 76.7 255.3 l 4.6 -4.6" stroke="#b45309" stroke-width=".32"/><text x="84" y="256" font-family="sans-serif" font-size="3.2" fill="#92400e">E10?</text></g>
+<g data-source="foto-estimada" data-id="E11" data-x="348" data-y="212"><circle cx="190" cy="250" r="4" fill="none" stroke="#b45309" stroke-width=".4" stroke-dasharray="1.2 .9"/><path d="M 187.7 247.7 l 4.6 4.6 M 187.7 252.3 l 4.6 -4.6" stroke="#b45309" stroke-width=".32"/><text x="195" y="253" font-family="sans-serif" font-size="3.2" fill="#92400e">E11?</text></g>
+</g>
+<g data-registration="175-40"><path d="M 15 78 h 4 M 17 76 v 4" stroke="#059669" stroke-width=".22"/></g>
+<g data-registration="180-40"><path d="M 20 78 h 4 M 22 76 v 4" stroke="#059669" stroke-width=".22"/></g>
+<g data-registration="175-100"><path d="M 15 138 h 4 M 17 136 v 4" stroke="#059669" stroke-width=".22"/></g>
+<g data-registration="180-100"><path d="M 20 138 h 4 M 22 136 v 4" stroke="#059669" stroke-width=".22"/></g>
+<g data-registration="175-190"><path d="M 15 228 h 4 M 17 226 v 4" stroke="#059669" stroke-width=".22"/></g>
+<g data-registration="180-190"><path d="M 20 228 h 4 M 22 226 v 4" stroke="#059669" stroke-width=".22"/></g>
+<path d="M 12 267 h 50 M 12 265 v 4 M 62 265 v 4" fill="none" stroke="black" stroke-width=".40"/>
+<text x="12" y="272" font-family="sans-serif" font-size="3.5">ESTA BARRA DEBE MEDIR EXACTAMENTE 50 mm</text>
+<text x="12" y="289" font-family="sans-serif" font-size="3.4" fill="#92400e">Región X 170–355 mm. Solapar con la otra A4 en 15 mm, alineando marcas verdes.</text>
+</svg>
